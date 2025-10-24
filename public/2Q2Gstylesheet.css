@@ -1,0 +1,21 @@
+            .nav-thingy {
+                overflow: hidden;
+                background-color: #7b8ba2;
+                border-radius: 15px;
+            }
+            .nav-thingy a {
+                float: left;
+                color: #ffffff;
+                text-align: center;
+                padding: 10px 16px;
+                text-decoration: none;
+                font-size: 12px;
+                font-family:'Comic Sans MS';
+            }
+            .nav-thingy a:hover {
+                background-color: #646e81;
+            }
+            .nav-thingy a.active {
+                background-color: #535c6c;
+                color: white;
+            }
