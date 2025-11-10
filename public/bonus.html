@@ -1,0 +1,140 @@
+<html>
+     <html lang="en">
+    <head>
+        <title>Bonus, Na06</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    </head>
+    <style>
+        body {
+            background-color: #FFFFFF;
+        }
+        div.wrapper {
+            background-color: #7b8ba2;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+        div.wrapper2 {
+            margin-top: 10px;
+            background-color: #e6ebf2;
+            text-align: center;
+        }
+        h1, h3 {
+            color: #FFFFFF;
+            font-family:'Comic Sans MS';
+            text-align: center;
+        }
+        #result {
+            font-size: 25px;
+            margin: 10px;
+            color: #7e8ea8;
+            font-family:'Comic Sans MS';
+            text-align: center;
+        }
+        #letter {
+            font-size: 30px;
+            margin: 10px;
+            color: #7e8ea8;
+            font-family: 'Comic Sans MS';
+            text-align: center;
+        }
+        #score {
+            font-size: 20px;
+            color: #7e8ea8;
+            font-family:'Comic Sans MS';
+            text-align: center;
+        }
+        #timer, #startBtn {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #7e8ea8;
+            font-family:'Comic Sans MS';
+            text-align: center;
+        }
+        button {
+            color: #7e8ea8;
+            background-color: #e6ebf2;
+            border-color: #7b8ba2;
+        }
+    </style>
+
+    <body>
+    <div class="wrapper">
+    <h1> Reaction Game: How many can you get right in 30s? </h1>
+    <h3> The letter you need to type is ... </h3>
+    </div>
+    <div class="wrapper2">
+        <div id="letter">Press Start . . . !</div>
+        <div id="result"></div>
+        <div id="score">Score: 0</div>
+        <div id="timer">Time Left: 30s</div>
+        <button id="startButton" onclick="game()"> Start ! </button>
+
+    <script>
+        let score = 0;
+        let time = 30;
+        let letterNow = '';
+        let gameOn = false;
+        let timerInterval;
+
+        const letterDisplay = document.getElementById('letter');
+        const resultDisplay = document.getElementById('result');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+
+        function randomLetter() {
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            return alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+        
+        function newLetter() {
+            letterNow = randomLetter();
+            letterDisplay.textContent = letterNow;
+        }
+
+        function game() {
+            console.log("hi");
+            if (gameOn) return;
+            gameOn = true;
+            score = 0;
+            time = 30;
+            scoreDisplay.textContent = 'Score: 0';
+            timerDisplay.textContent = `Time Left: ${time}s`;
+            newLetter();
+
+            timerInterval = setInterval(() => {
+                time--;
+                timerDisplay.textContent = `Time left: ${time}s`;
+                if (time <= 0) gameEnd();
+            }, 1000);
+        }
+
+        function gameEnd() {
+            clearInterval(timerInterval);
+            gameOn = false;
+            letterDisplay.textContent = 'Game Over !!';
+            resultDisplay.textContent = `Final Score: ${score}`;
+        }
+
+        document.body.onkeypress = function(e) {
+            if (!gameOn) return;
+            
+            const pressed =  e.key.toUpperCase();
+            console.log(pressed + " " + letterNow);
+
+            if (pressed === letterNow) {
+                score++;
+                scoreDisplay.textContent = `Score: ${score}`;
+                resultDisplay.textContent = '✅ Correct!';
+                newLetter();
+            }
+            else {
+                resultDisplay.textContent = '❌ Try again!';
+                newLetter();
+            }
+        };
+        startButton.addEventListener('click', game);
+    </script>
+    </div>
+    </body>
+</html>
